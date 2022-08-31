@@ -50,6 +50,19 @@
             <input class="btn btn-primary" type="submit" value="Shorten">
         </div>
     </form>
+
+    {% if codes %}
+    <div class="m-3">
+        <h1> Short Name your Created ..</h1>
+        <ul>
+            {% for code in codes %}
+            <a href="/{{code}}">
+            <li> {{ code }} </li>
+            </a>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
     </div>
   </body>
 </html>

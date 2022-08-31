@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,url_for,flash,redirect,abort
+from flask import Flask,render_template,request,url_for,flash,redirect,abort,session
 import json,os.path
 from werkzeug.utils import secure_filename
 
@@ -9,7 +9,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 def home():
     urls = {}
     if request.method == 'GET':
-        return render_template("index.html",name="praveen")
+        return render_template("index.html",codes=session.keys())
     else:
         # Validate duplicate short names
         if os.path.exists("urls.json"):
@@ -33,6 +33,7 @@ def home():
         # Save the urls dict into a json file
         with open("urls.json","w") as url_file:
             json.dump(urls,url_file)
+        session[request.form["code"]] = True
         flash(f'Your Shortener url successfully created.. {urls}',"success")
         return redirect("/")
     
